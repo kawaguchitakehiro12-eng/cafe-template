@@ -3,40 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>NOIR CAFE</title>
+<title id="pageTitle">NOIR CAFE</title>
 
 <style>
-
 :root{
 --bg:#f7f3ec;
 --dark:#1d1c1a;
 --muted:#726d66;
 --accent:#b48b58;
 }
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
-
+*{margin:0;padding:0;box-sizing:border-box;}
 body{
 font-family: Georgia, "Yu Mincho", serif;
 background:var(--bg);
 color:var(--dark);
 line-height:1.8;
 }
-
-a{
-text-decoration:none;
-color:inherit;
-}
-
+a{text-decoration:none;color:inherit;}
 nav{
 position:fixed;
-top:0;
-left:0;
-right:0;
+top:0;left:0;right:0;
 display:flex;
 justify-content:space-between;
 padding:26px 8vw;
@@ -44,14 +30,12 @@ background:rgba(247,243,236,.88);
 backdrop-filter:blur(8px);
 z-index:100;
 }
-
 nav a{
 margin-left:20px;
 font-size:12px;
 letter-spacing:.12em;
 text-transform:uppercase;
 }
-  
 header{
 min-height:100vh;
 display:flex;
@@ -62,176 +46,121 @@ linear-gradient(rgba(247,243,236,.35),rgba(247,243,236,.65)),
 url("https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=1800&auto=format&fit=crop")
 center/cover;
 }
-
-.hero{
-max-width:760px;
-}
-
+.hero{max-width:760px;}
 .small{
 font-size:12px;
 letter-spacing:.35em;
 color:var(--accent);
 margin-bottom:25px;
 }
-
 h1{
 font-weight:400;
 font-size:clamp(56px,9vw,110px);
 line-height:1;
 margin-bottom:30px;
 }
-
-.hero p{
-max-width:520px;
-color:var(--muted);
-}
-
+.hero p{max-width:520px;color:var(--muted);}
 .btn{
 display:inline-block;
 margin-top:35px;
 padding:14px 30px;
 border:1px solid var(--dark);
 }
-
-.btn:hover{
-background:var(--dark);
-color:white;
-}
-
-section{
-padding:100px 8vw;
-}
-
+.btn:hover{background:var(--dark);color:white;}
+section{padding:100px 8vw;}
 .section-label{
 font-size:12px;
 letter-spacing:.35em;
 color:var(--accent);
 margin-bottom:20px;
 }
-
 h2{
 font-size:clamp(38px,6vw,72px);
 font-weight:400;
 margin-bottom:40px;
 }
-
 .concept{
 display:grid;
 grid-template-columns:1fr 1fr;
 gap:60px;
 align-items:center;
 }
-
 .concept img{
 width:100%;
 height:600px;
 object-fit:cover;
 }
-
 .menu-grid{
 display:grid;
 grid-template-columns:repeat(3,1fr);
 gap:30px;
 margin-top:50px;
 }
-
 .card img{
 width:100%;
 height:360px;
 object-fit:cover;
 margin-bottom:20px;
 }
-
 .card h3{
 font-weight:400;
 font-size:28px;
 margin-bottom:10px;
 }
-
-.card p{
-color:var(--muted);
+.card p{color:var(--muted);}
+.card .price{
+display:block;
+margin-top:10px;
+color:var(--accent);
+font-size:15px;
 }
-
 .gallery{
 display:grid;
 grid-template-columns:1fr 1fr;
 gap:20px;
 }
-
 .gallery img{
 width:100%;
 height:500px;
 object-fit:cover;
 }
-
-.access{
-max-width:700px;
-}
-
+.access{max-width:700px;}
 .info{
 margin-top:40px;
 border-top:1px solid #ddd;
 }
-
 .row{
 display:grid;
 grid-template-columns:130px 1fr;
 padding:20px 0;
 border-bottom:1px solid #ddd;
 }
-
 .cta{
 text-align:center;
 padding:130px 30px;
 background:#efe8dd;
 }
-
 footer{
 padding:30px;
 text-align:center;
 font-size:12px;
 color:#999;
 }
-
 @media(max-width:800px){
-
-nav a{
-margin-left:12px;
-font-size:13px;
-letter-spacing:0;
-}
-  
-.concept,
-.gallery,
-.menu-grid{
-grid-template-columns:1fr;
-}
-
-.concept img{
-height:420px;
-}
-
-.card img{
-height:280px;
-}
-
-.gallery img{
-height:300px;
-}
-
-section{
-padding:70px 24px;
-}
-
+nav a{margin-left:12px;font-size:13px;letter-spacing:0;}
+.concept,.gallery,.menu-grid{grid-template-columns:1fr;}
+.concept img{height:420px;}
+.card img{height:280px;}
+.gallery img{height:300px;}
+section{padding:70px 24px;}
 }
 </style>
-
 </head>
+
 <body>
 
 <nav>
-<div>NOIR CAFE</div>
-
+<div id="navShopName">NOIR CAFE</div>
 <div>
 <a href="#">TOP</a>
 <a href="menu.html">MENU</a>
@@ -239,11 +168,9 @@ padding:70px 24px;
 </div>
 </nav>
 
-<header>
+<header id="heroHeader">
 <div class="hero">
-<div class="small">
-EDITORIAL COFFEE HOUSE
-</div>
+<div class="small">EDITORIAL COFFEE HOUSE</div>
 
 <h1>
 Slow mornings,<br>
@@ -256,142 +183,124 @@ good coffee.
 季節のペストリーを。
 </p>
 
-<a href="#" class="btn">
-Reserve
-</a>
-
+<a href="#" class="btn">Reserve</a>
 </div>
 </header>
 
 <section class="concept">
 <div>
-
-<div class="section-label">
-CONCEPT
-</div>
-
-<h2>
-雑誌の1ページのような
-静かな時間。
-</h2>
-
+<div class="section-label">CONCEPT</div>
+<h2>雑誌の1ページのような静かな時間。</h2>
 <p>
 空間、音楽、香り。
 すべてがゆるやかに流れる
 都会のオアシス。
 </p>
-
 </div>
 
 <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=1200&auto=format&fit=crop">
-
 </section>
 
-
 <section>
-
-<div class="section-label">
-SIGNATURE
-</div>
-
-<h2>
-おすすめ
-</h2>
-
-<div class="menu-grid">
-
-<div class="card">
-<img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=1200">
-<h3>Latte</h3>
-<p>濃厚で滑らかな定番ラテ</p>
-</div>
-
-<div class="card">
-<img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?q=80&w=1200">
-<h3>Croissant</h3>
-<p>発酵バター使用</p>
-</div>
-
-<div class="card">
-<img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=1200">
-<h3>Hand Drip</h3>
-<p>季節豆を日替わりで</p>
-</div>
-
-</div>
-
+<div class="section-label">SIGNATURE</div>
+<h2>おすすめ</h2>
+<div class="menu-grid" id="menuGrid"></div>
 </section>
 
-
 <section>
-
-<div class="section-label">
-GALLERY
-</div>
-
-<h2>
-空間
-</h2>
-
+<div class="section-label">GALLERY</div>
+<h2>空間</h2>
 <div class="gallery">
 <img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?q=80&w=1200">
 <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=1200">
 </div>
-
 </section>
 
-
 <section id="access">
-
-<div class="section-label">
-ACCESS
-</div>
-
-<h2>
-店舗情報
-</h2>
+<div class="section-label">ACCESS</div>
+<h2>店舗情報</h2>
 
 <div class="info">
-
 <div class="row">
 <div>ADDRESS</div>
-<div>東京都豊島区○○</div>
+<div id="address">東京都豊島区○○</div>
 </div>
 
 <div class="row">
 <div>OPEN</div>
-<div>10:00 - 21:00</div>
+<div id="open">10:00 - 21:00</div>
 </div>
 
 <div class="row">
 <div>CLOSED</div>
-<div>Tuesday</div>
+<div id="closed">Tuesday</div>
 </div>
-
 </div>
-
 </section>
 
-
 <section class="cta">
-
-<div class="section-label">
-RESERVATION
-</div>
-
-<h2>
-ご予約はこちら
-</h2>
-
-<a class="btn" href="#">
-LINE予約
-</a>
-
+<div class="section-label">RESERVATION</div>
+<h2>ご予約はこちら</h2>
+<a class="btn" href="#">LINE予約</a>
 </section>
 
 <footer>
-© NOIR CAFE
+© <span id="footerShopName">NOIR CAFE</span>
 </footer>
+
+<script>
+fetch('./data/site.json')
+  .then(res => res.json())
+  .then(data => {
+    const shopName = data.shopName || 'NOIR CAFE';
+
+    document.title = shopName;
+    document.getElementById('navShopName').textContent = shopName;
+    document.getElementById('footerShopName').textContent = shopName;
+    document.getElementById('address').textContent = data.address || '';
+    document.getElementById('open').textContent = data.open || '';
+    document.getElementById('closed').textContent = data.closed || '';
+
+    if (data.mainImage) {
+      document.getElementById('heroHeader').style.background =
+        `linear-gradient(rgba(247,243,236,.35),rgba(247,243,236,.65)), url("${data.mainImage}") center/cover`;
+    }
+  });
+
+fetch('./data/menu.json')
+  .then(res => res.json())
+  .then(data => {
+    const menuGrid = document.getElementById('menuGrid');
+    menuGrid.innerHTML = '';
+
+    const firstCategory = data.categories?.[0];
+
+    if (!firstCategory || !firstCategory.items || firstCategory.items.length === 0) {
+      menuGrid.innerHTML = '<p>メニュー準備中です。</p>';
+      return;
+    }
+
+    firstCategory.items.slice(0, 3).forEach((item, index) => {
+      const images = [
+        'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=1200',
+        'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?q=80&w=1200',
+        'https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=1200'
+      ];
+
+      const card = document.createElement('div');
+      card.className = 'card';
+
+      card.innerHTML = `
+        <img src="${item.image || images[index % images.length]}" alt="${item.name || ''}">
+        <h3>${item.name || ''}</h3>
+        <p>${item.description || ''}</p>
+        <span class="price">${item.price || ''}</span>
+      `;
+
+      menuGrid.appendChild(card);
+    });
+  });
+</script>
 
 </body>
 </html>
