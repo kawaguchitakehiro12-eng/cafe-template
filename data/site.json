@@ -1,31 +1,25 @@
 {
   "shopName": "NOIR CAFE",
-
   "hero": {
     "title": "Voyage to your everyday.",
     "text": "一杯のコーヒーから、日常に小さな旅を。",
     "image": ""
   },
-
   "concept": {
     "title": "一杯のコーヒーから、心地よい時間がはじまる。",
-    "text": "街の喧騒から少し離れて..."
+    "text": "街の喧騒から少し離れて、静かな時間を楽しむ場所。"
   },
-
   "recommend": {
     "title": "おすすめメニュー"
   },
-
   "gallery": {
     "title": "ギャラリー"
   },
-
   "access": {
     "address": "東京都○○",
     "open": "10:00 - 21:00",
-    "closed": "火曜"
+    "closed": "火曜日"
   },
-
   "reserve": {
     "title": "ご予約はこちら",
     "lineUrl": "https://line.me/"
