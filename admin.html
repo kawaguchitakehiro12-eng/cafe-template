@@ -6,149 +6,289 @@
 <title>管理画面</title>
 
 <style>
-body{font-family:sans-serif;background:#f5f5f5;padding:20px;}
-.wrap{max-width:800px;margin:auto;background:#fff;padding:20px;border-radius:10px;}
-h2{margin-top:30px;}
-input,textarea{
-width:100%;
-padding:10px;
-margin-top:8px;
-border:1px solid #ddd;
-border-radius:6px;
-}
-button{
-margin-top:20px;
-padding:12px;
-width:100%;
-background:#111;
-color:#fff;
-border:none;
-border-radius:6px;
-}
+body{font-family:system-ui,sans-serif;background:#f5f5f5;margin:0;padding:20px;color:#222}
+.wrap{max-width:900px;margin:auto;background:#fff;padding:24px;border-radius:14px;box-shadow:0 8px 24px rgba(0,0,0,.08)}
+h1{margin-bottom:8px}
+h2{margin-top:34px;border-top:1px solid #eee;padding-top:24px}
+h3{margin:0}
+label{display:block;font-weight:bold;margin-top:14px;margin-bottom:6px}
+input,textarea{width:100%;padding:12px;border:1px solid #ddd;border-radius:8px;font-size:15px;box-sizing:border-box}
+textarea{min-height:80px;resize:vertical}
+button{width:100%;margin-top:20px;padding:14px;border:none;border-radius:999px;background:#111;color:#fff;font-weight:bold;cursor:pointer}
+.sub-button{background:#444}
+.delete-button{background:none;color:#999;width:auto;padding:0;margin:0;font-size:12px}
+.category{background:#fafafa;border:1px solid #e5e5e5;border-radius:12px;padding:16px;margin-top:18px}
+.item{background:#fff;border:1px solid #eee;border-radius:12px;padding:16px;margin-top:14px}
+.item-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.row{display:grid;grid-template-columns:1fr 140px;gap:12px}
+.status{margin-top:12px;font-weight:bold}
+.note{font-size:13px;color:#777;margin-top:10px}
+@media(max-width:700px){.row{grid-template-columns:1fr}.wrap{padding:18px}}
 </style>
 </head>
 
 <body>
-
 <div class="wrap">
 
-<h1>管理画面</h1>
+<h1>店舗管理画面</h1>
+<p class="note">トップページ・メニュー・LINE予約リンクを編集できます。</p>
 
 <h2>基本情報</h2>
-<input id="shopName" placeholder="店舗名">
+<label>店舗名</label>
+<input id="shopName">
 
-<h2>ヒーロー</h2>
-<input id="heroTitle" placeholder="タイトル">
-<textarea id="heroText" placeholder="説明"></textarea>
-<input id="heroImage" placeholder="画像URL">
+<h2>トップ画像・キャッチコピー</h2>
+<label>メインタイトル</label>
+<input id="heroTitle">
+
+<label>説明文</label>
+<textarea id="heroText"></textarea>
+
+<label>メイン画像URL</label>
+<input id="heroImage">
 
 <h2>コンセプト</h2>
-<input id="conceptTitle" placeholder="見出し">
-<textarea id="conceptText" placeholder="本文"></textarea>
+<label>見出し</label>
+<input id="conceptTitle">
 
-<h2>見出し</h2>
-<input id="recommendTitle" placeholder="おすすめタイトル">
-<input id="galleryTitle" placeholder="ギャラリータイトル">
+<label>本文</label>
+<textarea id="conceptText"></textarea>
+
+<h2>各セクション見出し</h2>
+<label>おすすめメニュー見出し</label>
+<input id="recommendTitle">
+
+<label>ギャラリー見出し</label>
+<input id="galleryTitle">
 
 <h2>店舗情報</h2>
-<input id="address" placeholder="住所">
-<input id="open" placeholder="営業時間">
-<input id="closed" placeholder="定休日">
+<label>住所</label>
+<input id="address">
+
+<label>営業時間</label>
+<input id="open">
+
+<label>定休日</label>
+<input id="closed">
 
 <h2>予約</h2>
-<input id="reserveTitle" placeholder="予約タイトル">
-<input id="lineUrl" placeholder="LINEリンク">
+<label>予約見出し</label>
+<input id="reserveTitle">
 
-<button onclick="save()">保存</button>
+<label>LINEリンク</label>
+<input id="lineUrl">
+
+<h2>メニュー編集</h2>
+<div id="menuEditor"></div>
+
+<button class="sub-button" onclick="addCategory()">＋ カテゴリを追加</button>
+
+<button id="saveButton" onclick="saveData()">保存する</button>
+<div id="status" class="status"></div>
 
 </div>
 
 <script>
-
 const API_URL = "https://lingering-cell-217e.kawaguchitakehiro12.workers.dev";
-let menuData = {};
+
+let menuData = { categories: [] };
 
 fetch('./data/site.json')
-.then(r=>r.json())
-.then(data=>{
+.then(r => r.json())
+.then(data => {
+  document.getElementById("shopName").value = data.shopName || "";
 
-document.getElementById("shopName").value = data.shopName || "";
+  document.getElementById("heroTitle").value = data.hero?.title || "";
+  document.getElementById("heroText").value = data.hero?.text || "";
+  document.getElementById("heroImage").value = data.hero?.image || "";
 
-document.getElementById("heroTitle").value = data.hero.title || "";
-document.getElementById("heroText").value = data.hero.text || "";
-document.getElementById("heroImage").value = data.hero.image || "";
+  document.getElementById("conceptTitle").value = data.concept?.title || "";
+  document.getElementById("conceptText").value = data.concept?.text || "";
 
-document.getElementById("conceptTitle").value = data.concept.title || "";
-document.getElementById("conceptText").value = data.concept.text || "";
+  document.getElementById("recommendTitle").value = data.recommend?.title || "";
+  document.getElementById("galleryTitle").value = data.gallery?.title || "";
 
-document.getElementById("recommendTitle").value = data.recommend.title || "";
-document.getElementById("galleryTitle").value = data.gallery.title || "";
+  document.getElementById("address").value = data.access?.address || "";
+  document.getElementById("open").value = data.access?.open || "";
+  document.getElementById("closed").value = data.access?.closed || "";
 
-document.getElementById("address").value = data.access.address || "";
-document.getElementById("open").value = data.access.open || "";
-document.getElementById("closed").value = data.access.closed || "";
-
-document.getElementById("reserveTitle").value = data.reserve.title || "";
-document.getElementById("lineUrl").value = data.reserve.lineUrl || "";
-
+  document.getElementById("reserveTitle").value = data.reserve?.title || "";
+  document.getElementById("lineUrl").value = data.reserve?.lineUrl || "";
 });
 
 fetch('./data/menu.json')
-.then(r=>r.json())
-.then(data=>{
-menuData = data;
+.then(r => r.json())
+.then(data => {
+  menuData = data;
+  renderMenu();
 });
 
-function save(){
+function renderMenu(){
+  const editor = document.getElementById("menuEditor");
+  editor.innerHTML = "";
 
-const siteData = {
-shopName: document.getElementById("shopName").value,
+  menuData.categories.forEach((category, categoryIndex) => {
+    const categoryDiv = document.createElement("div");
+    categoryDiv.className = "category";
 
-hero:{
-title: document.getElementById("heroTitle").value,
-text: document.getElementById("heroText").value,
-image: document.getElementById("heroImage").value
-},
+    categoryDiv.innerHTML = `
+      <label>カテゴリ名</label>
+      <input value="${escapeHtml(category.name || '')}" oninput="updateCategory(${categoryIndex}, this.value)">
+      <div id="items-${categoryIndex}"></div>
+      <button class="sub-button" onclick="addItem(${categoryIndex})">＋ 商品を追加</button>
+      <button class="delete-button" onclick="deleteCategory(${categoryIndex})">カテゴリを削除</button>
+    `;
 
-concept:{
-title: document.getElementById("conceptTitle").value,
-text: document.getElementById("conceptText").value
-},
+    editor.appendChild(categoryDiv);
 
-recommend:{
-title: document.getElementById("recommendTitle").value
-},
+    const itemsWrap = document.getElementById(`items-${categoryIndex}`);
 
-gallery:{
-title: document.getElementById("galleryTitle").value
-},
+    (category.items || []).forEach((item, itemIndex) => {
+      const itemDiv = document.createElement("div");
+      itemDiv.className = "item";
 
-access:{
-address: document.getElementById("address").value,
-open: document.getElementById("open").value,
-closed: document.getElementById("closed").value
-},
+      itemDiv.innerHTML = `
+        <div class="item-head">
+          <h3>商品</h3>
+          <button class="delete-button" onclick="deleteItem(${categoryIndex}, ${itemIndex})">削除</button>
+        </div>
 
-reserve:{
-title: document.getElementById("reserveTitle").value,
-lineUrl: document.getElementById("lineUrl").value
+        <label>商品名</label>
+        <input value="${escapeHtml(item.name || '')}" oninput="updateItem(${categoryIndex}, ${itemIndex}, 'name', this.value)">
+
+        <div class="row">
+          <div>
+            <label>価格</label>
+            <input value="${escapeHtml(item.price || '')}" oninput="updateItem(${categoryIndex}, ${itemIndex}, 'price', this.value)">
+          </div>
+          <div>
+            <label>表示順</label>
+            <input type="number" value="${item.order || itemIndex + 1}" oninput="updateItem(${categoryIndex}, ${itemIndex}, 'order', this.value)">
+          </div>
+        </div>
+
+        <label>説明文</label>
+        <textarea oninput="updateItem(${categoryIndex}, ${itemIndex}, 'description', this.value)">${escapeHtml(item.description || '')}</textarea>
+
+        <label>画像URL</label>
+        <input value="${escapeHtml(item.image || '')}" oninput="updateItem(${categoryIndex}, ${itemIndex}, 'image', this.value)">
+      `;
+
+      itemsWrap.appendChild(itemDiv);
+    });
+  });
 }
-};
 
-fetch(API_URL,{
-method:"POST",
-headers:{ "Content-Type":"application/json" },
-body: JSON.stringify({
-repo:"cafe-template",
-siteData,
-menuData
-})
-})
-.then(()=> alert("保存完了"))
-.catch(()=> alert("保存失敗"));
-
+function updateCategory(index, value){
+  menuData.categories[index].name = value;
 }
 
+function updateItem(categoryIndex, itemIndex, key, value){
+  menuData.categories[categoryIndex].items[itemIndex][key] = value;
+}
+
+function addCategory(){
+  menuData.categories.push({
+    name:"新しいカテゴリ",
+    items:[]
+  });
+  renderMenu();
+}
+
+function deleteCategory(index){
+  if(!confirm("このカテゴリを削除しますか？")) return;
+  menuData.categories.splice(index,1);
+  renderMenu();
+}
+
+function addItem(categoryIndex){
+  menuData.categories[categoryIndex].items.push({
+    name:"新しい商品",
+    price:"0円",
+    description:"",
+    image:"",
+    order:menuData.categories[categoryIndex].items.length + 1
+  });
+  renderMenu();
+}
+
+function deleteItem(categoryIndex, itemIndex){
+  if(!confirm("この商品を削除しますか？")) return;
+  menuData.categories[categoryIndex].items.splice(itemIndex,1);
+  renderMenu();
+}
+
+async function saveData(){
+  const status = document.getElementById("status");
+  const button = document.getElementById("saveButton");
+
+  const siteData = {
+    shopName: document.getElementById("shopName").value,
+    hero:{
+      title: document.getElementById("heroTitle").value,
+      text: document.getElementById("heroText").value,
+      image: document.getElementById("heroImage").value
+    },
+    concept:{
+      title: document.getElementById("conceptTitle").value,
+      text: document.getElementById("conceptText").value
+    },
+    recommend:{
+      title: document.getElementById("recommendTitle").value
+    },
+    gallery:{
+      title: document.getElementById("galleryTitle").value
+    },
+    access:{
+      address: document.getElementById("address").value,
+      open: document.getElementById("open").value,
+      closed: document.getElementById("closed").value
+    },
+    reserve:{
+      title: document.getElementById("reserveTitle").value,
+      lineUrl: document.getElementById("lineUrl").value
+    }
+  };
+
+  button.disabled = true;
+  button.textContent = "保存中...";
+  status.textContent = "";
+
+  try{
+    const res = await fetch(API_URL,{
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify({
+        repo:"cafe-template",
+        siteData,
+        menuData
+      })
+    });
+
+    const result = await res.json();
+
+    if(!res.ok || !result.success){
+      throw new Error(result.error || "保存に失敗しました");
+    }
+
+    status.style.color = "#118a35";
+    status.textContent = "保存しました。サイト反映まで少しお待ちください。";
+  }catch(error){
+    status.style.color = "#b3261e";
+    status.textContent = "保存に失敗しました：" + error.message;
+  }finally{
+    button.disabled = false;
+    button.textContent = "保存する";
+  }
+}
+
+function escapeHtml(str){
+  return String(str)
+    .replaceAll("&","&amp;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;");
+}
 </script>
 
 </body>
