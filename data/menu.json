@@ -1,0 +1,15 @@
+{
+  "categories": [
+    {
+      "name": "Coffee",
+      "items": [
+        {
+          "name": "アメリカーノ",
+          "price": "500円",
+          "description": "すっきりした味わい",
+          "order": 1
+        }
+      ]
+    }
+  ]
+}
